@@ -1,70 +1,102 @@
-menu =  """
-    [0] Depositar
-    [1] Sacar
+menu_principal = '''
+    [0] Deposito 
+    [1] Saque
     [2] Extrato
     [3] Sair
-    
-=> """
+==> '''
 
-saldo = 2000
+Saldo = 3500
+Quant_saque = 0
+Quant_max_saques = 5
 limite = 500
 extrato = ''
-numero_saques = 0
-LIMITE_SAQUES = 3 
 
-while True:
-    opcao = input (menu)
+
+while True :
+    opcao = input(menu_principal)
     
-    if opcao == "0" :       
-        Deposito = float(input('Adicionar valor de deposito:'))
+    if opcao == "0":
+        Deposito = float (input("valor de deposito:"))
         
-        if Deposito > 0:
-            saldo += Deposito
-            extrato += f"Deposito: R$ {Deposito:.2f}\n"
+        if Deposito > 0 :
+            Saldo += Deposito
+            extrato += f"Deposito = R$ {Deposito: .2f}\n"
             
-            print(saldo)
-            
-        else:
-            print('Operação invalida, informe novo valor.') 
-            
-             
-    elif opcao == '1':
-        
-        saque = float(input('Valor de saque:'))
-        
-        excedeu_saldo = saque > saldo 
-        
-        excedeu_limite = saque > limite 
-        
-        excedeu_saque = numero_saques >= LIMITE_SAQUES
-        
-        if excedeu_saldo:
-            print('valor de saque indisponivel')
-            
-        elif excedeu_limite:
-            print('limite indiponivel, voltar ? ')
-        
-            
-        elif excedeu_saque:
-            print('Quantidade de saques foram excedido, por favor re-inicie as operaçoes!') 
-              
-        elif saque > 0:
-            saldo -= saque
-            extrato += f'saque: R$ {saque:.2f}\n' 
-            numero_saques += 1
+            print(Saldo)
             
         else:
-            print("finaliznado operações")    
-              
-                
-    elif opcao == '2':
-        print("=================Extrato=====================\n")
-        print("não foram realisadas movimentaçoes" if not extrato else extrato)
-        print(f"Saldo = R$ {saldo: .2f}")
-        print("\n=============================================")
+            print("Opração invalida! adicione novo valor!!")
         
-    elif opcao == '3':
+              
+    elif opcao == "1":
+    
+        Saque = float (input("valor de saque:"))
+        
+        excedeu_Saldo = Saque > Saldo
+        excedeu_Saque = Saque > limite
+        excedeu_limite = Quant_saque >= Quant_max_saques
+        
+            
+        if excedeu_limite:
+            print( "operação invalida! quantidade de saques diarias excedida")
+            
+            menu_segundario = '''
+                [0] Voltar
+                [1] Finalizar
+            ==> '''
+            input (menu_segundario)
+            if menu_segundario == 0 :
+                menu_principal 
+            else:
+                print("Operação finalizada com sucesso !!")
+                break
+            
+        elif excedeu_Saque:
+            print("operação invalida! valor digitado excede o valor maximo habilitado. ")
+            
+            menu_segundario = '''
+                [0] Voltar
+                [1] Finalizar
+            ==> '''
+            input (menu_segundario)
+            if menu_segundario == 0 :
+                menu_principal 
+            else:
+                print("Operação finalizada com sucesso !!")
+                break
+            
+        elif excedeu_Saldo:
+            print("operação invalida! saldo indisponivel.")
+            
+            menu_segundario = '''
+                [0] Voltar
+                [1] Finalizar
+            ==> '''
+            input (menu_segundario)
+            if menu_segundario == 0 :
+                menu_principal 
+            else:
+                print("Operação finalizada com sucesso !!")
+                break
+            
+        elif Saque > 0:    
+            Saldo -= Saque
+            extrato += f"Saque = R$ {Saque: .2f}\n"
+            Quant_saque += 1
+            
+            print(Saldo)
+            
+        else:
+            print("opeação finalizda...")
+            
+    elif opcao == "2":
+        print("==============extrato=============\n")
+        print("não foram realizadas transaçoes" if not extrato else extrato)
+        print(f"saldo = R$ {Saldo: .2f}\n")
+        print("\n=================================")
+        
+    elif opcao == "3":
+        print("SAINDO, aguarde um instane ...")
         break
-    
     else:
-        print('operação invalida, por favor selecione novamente a operação desejada.')
+        print("operação invalida!, tente novamente !!")
